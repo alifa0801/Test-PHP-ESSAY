@@ -1,0 +1,193 @@
+1.Jelaskan apa perbedaan variabel $_GET dan $_POST.
+  Jawab :$_GET  = Variabel untuk menampung data atau nilai, yang akan ditampilkan pada URL, kemudian akan ditampung oleh action.
+	 $_POST = Variabel untuk menampung data atau nilai, yang mengirimkan data atau nilai langsung ke action untuk ditampung, tanpa menampilkan pada URL.
+
+2.Jelaskan apa yang dimaksud dengan Namespacing.
+  Jawab : Namespacing adalah keyword yang digunakan untuk memdeklarasikan ruang lingkup dari class yang dibuat.
+
+3.Jelaskan manfaat dan penggunaan magic method __construct, __destruct, __get, __set,__isset, __unset, __call, dan __callStatic.
+  Jawab : __construct = Method yang dijalankan pertama kali pada saat sebuah class dijalankan, 
+			serta berfungsi untuk memanggil class model atau library yang akan digunakan pada setiap function.
+			 <?php
+			 class BaseClass{
+				function__construct(){
+				echo "construct".__METHOD__.'<br>';
+				}
+			 }
+
+			 class SubClass extends BaseClass{
+				function__construct(){
+				parent::__construct();
+				echo "construct".__METHOD__.'<br>';
+				}
+			 }
+			 $baseClass = new BaseClass();
+			 $subClass = new SubClass();
+			 ?>
+
+	  __destruct = Method yang terakhir dijalankan setelah semua method di classnya selesai dijalankan,
+		       serta berfungsi untuk menghapus atau mengeksekusi suatu perintah sebelum class objek itu selesai.
+			<?php
+			class BaseClass{
+			public $name;
+			function__construct(){
+			echo "construct".__METHOD__.'<br>';
+			$this->name=__CLASS__;
+			}
+			
+			function__destruct(){
+			echo "Destruct".$this->name;
+				}
+			}
+			$baseClass = new BaseClass;
+			?>
+
+	  __get	     = Method yang akan diakses jika program ingin mengambil nilai.
+			<?php
+			class Buah{
+			public function__get($nama){
+				return 'Nama buah yang mempunyai duri adalah'.$nama;
+				}
+			}
+			$buah = new Buah;
+			echo $buah->Durian;
+			?>
+
+	  __set      = Method yang akan diakses jika program ingin mengatur nilai.
+			<?php
+			class Waktu1 {
+    			public function __get($contoh){
+        		echo "$contoh tidak ditemukan";
+    			}	
+	
+    			public function __set($contoh,$value){
+        		echo "Anda telah meng-set variabel $contoh menjadi $value";
+    				}
+			}
+			$a = new Waktu1;
+			$a->Pagi = "Selamat Pagi";
+			?>
+	 __isset     = untuk memeriksa apakah suatu variabel sudah terbentuk (ada) atau belum.
+			<?php
+			$user="";
+			if (!isset($user)) {
+			echo "Variabel tidak ada/belum terbentuk";
+			} else {
+			echo "Variabel ada";
+			}
+			?>
+	__unset	     = untuk memanggil method pada properti yang tidak dapat diakses.
+			<?php
+			class buku {
+  			private $pemilik = "Alifa";
+   			private $jenis = "Novel";
+   
+   			public function __construct(){
+     				echo "Ini berasal dari Constructor Buku";
+   			}
+  
+   			public function buka_buku(){
+     			return "Buka Buku $this->jenis punya $this->pemilik";
+  			}
+
+   			public function __destruct(){
+     				echo "Ini berasal dari Destructor Buku";
+   				}
+			}
+			$buku_alifa= new buku();
+  			echo "<br />";
+			echo $buku_alifa->buka_buku();
+			echo "<br />";
+  
+			unset($buku_alifa);
+  			echo "<br />";
+			echo "Objek Telah Dihancurkan";
+			?>
+	__call	      = Method yang tidak dapat diakses didalam objek.
+			<?php
+			class BaseClass{
+			public function__call($method,$param){
+				echo "manggil object method".$method."dengan parameter".implode(',',$param);
+				}
+			}
+			$baseClass = new BaseClass;
+			$baseClass->namaMethod('Object context');
+			echo  '<br>';
+			BaseClass::namaMethod('Static Content');
+			?>
+	__callStatic  = Method yang tidak dapat diakses didalam static.
+			<?php
+			class BaseClass{
+			public function__callStatic($method,$param){
+				echo "manggil static method".$method."dengan parameter".implode(',',$param);
+				}
+			}
+			$baseClass = new BaseClass;
+			$baseClass->namaMethod('Object context');
+			echo  '<br>';
+			BaseClass::namaMethod('Static Content');
+			?>
+
+4.Jelaskan apa yang dimaksud dengan keyword global, use, static, public, protected, private, self dan final.
+  Jawab: global	   = Keyword untuk membuat fungsi dapat mengakses variabel yang didefinisikan diluar fungsi.
+	 use	   = Keyword untuk mempersingkat cara pemanggilan constant,function dan class.
+	 static    = Jenis variabel yang mempertahankan nilainya pada setiap pemanggilan fungsi.
+	 public    = Hak akses yang memberikan akses bebas kepada seluruh program yang ada diluar maupun didalam Class sehingga dapat menggunakan variabel dan fungsi 
+		     (metode) yang terdapat dalam sebuah Class.
+	 protected = Hak akses yang membuat anggota Class hanya bisa diakses oleh turunan (inheritance) dan Class itu sendiri.
+	 private   = Hak akses yang tidak dapat diakses oleh siapapun kecuali dari Class itu sendiri.
+	 self	   = Keyword yang hanya untuk memanggil property atau method yang static(Constanta).
+		     contoh :
+		     self::NAMA_CONSTANTA
+	 final	   = Keyword yang digunakan dalam pendeklarasian variabel, class, method.
+		     contoh : 
+		     class Lingkaran{
+			final double PI = 3.14;
+		     }
+
+5.Jelaskan apa yang dimaksud dengan jenis class abstract, interface, dan trait.
+   Jawab : abtract      = Class yang tidak memiliki body,dan berfungsi untuk mengecek dan mengatur pekerjaan Class dibawahnya.
+	   interface    = Class yang tidak memiliki tubuh pada method - methodnya serta harus diimplementasikan dalam Class turunannya tidak boleh tidak.
+	   trait	= Class yang diizinkan untuk menggunakan kembali kode program (code reuse) yang berasal dari hierarki yang berbeda.
+
+6.Jelaskan apa yang dimaksud dengan Tight Coupling dan Loose Coupling dalam OOP.
+   Jawab : Tight Coupling = Keterikatan antar Class.
+	   Loose Coupling = Sebuah konsep sistem untuk mengurangi ketergantungan (interdependency) dari suatu sistem.
+
+7.Jelaskan apa yang dimaksud dengan Closure.
+   Jawab : Fungsi yang tidak memilki nama (anonymus function)
+
+8.Jelaskan apa yang dimaksud dengan Standard PHP Library (SPL) dan sebutkan classclass SPL yang anda ketahui dan kegunaannya menurut gambaran anda.
+   Jawab : Standard PHP Library (SPL) = library yang berisi segala sesuatu yg di butuhkan, misalnya menyediakan beberapa struktur data baru
+	   (SplObjectStorage,SplQueue,SplStack,SplDoublyLinkedList,SplHeap),beberapa iterator perulangan foreach(FilesystemIterator,CallbackFilteriterator,
+	   LimitIterator,ArrayIterator),dan interface (SplSubject,SplObserver).
+	   
+	   Contoh Class class:
+	   1. class_implements = untuk menggunakan (mengimplementasikan) interface.
+	   2. class_parent     = class yang dibuat sebelum Child Class,untuk membuat child class menggunakan fungsi inheritance.
+	   3. class_uses       = class yang dibuat untuk mempersingkat cara pemanggilan constant, function dan class.
+
+9.Apa yang anda ketahui tentang MVC, HMVC, Modular HMVC?
+  Jawab : MVC = MVC(Model,View,Controller) adalah metode untuk memisahkan Model(Data),View(Tampilan) dan Controller(memprosesnya).Yang diimplementasikan 
+	  	di framework dalam Website.
+	  HMVC = HMVC(Hierarchical Model View Controller) adalah hirarki folder (stuktur folder)yang mana menjadi modul.
+	  Modular HMVC =  konsep memanajemen file sesuai dengan modul yang sedang dibangun.
+
+10.Apa yang anda ketahui mengenai PHP Standard Recommendation (PSR) dan sebutkan PSR yang anda ketahui?
+   Jawab : PHP Standard Recommendation (PSR) = standarisasi konsep pemrograman dalam PHP yang bertujuan untuk menyamakan cara berfikir antar programmer.
+	   Contoh :
+	   PSR-0 = Standar Autoloading		PSR-11 = Antarmuka Kontainer
+	   PSR-1 = Standar Pengkodean Dasar	PSR-12 = Pengkodean yang Diperpanjang
+	   PSR-2 = Panduan Gaya Pengkodean	PSR-13 = Tautan Hypermedia
+	   PSR-3 = Antarmuka Logger		PSR-14 = pengelola acara
+	   PSR-4 = Standar Autoloading		PSR-15 = Penanganan Permintaan Server HTTP
+	   PSR-5 = PHP Doc Standard		PSR-16 = Cache sederhana
+	   PSR-6 = Antarmuka Caching		PSR-17 = Pabrik HTTP
+	   PSR-7 = Antarmuka Pesan HTTP		PSR-18 = Klien HTTP
+	   PSR-8 = Antarmuka Huggable		PSR-19 = Tag PHPDoc
+	   PSR-9 = Pengungkapan Keamanan
+	   PSR-10 = Penasihat Keamanan
+
+11.Apa yang anda ketahui mengenai Composer?
+   Jawab : Composer adalah sebuah project open source yang dimotori oleh Nils Adermann dan Jordi Boggiano.
+	   Project composer ini dihost di github, serta berfungsi untuk membuat coding php menjadi lebih terstuktur dan lebih rapi.
